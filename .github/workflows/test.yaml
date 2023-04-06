@@ -1,27 +1,42 @@
 name: Test
-on: [push]
+on: ["push", "pull_request"]
 jobs:
     Test_gcc:
         runs-on: ubuntu-latest
         steps:
         - name: Check out repository code
           uses: actions/checkout@v3
+        - run: git submodule init && git submodule update
         - run: sudo apt update -y
         - run: sudo apt install -y cmake
-        - run: cmake -H. -B_build -DBUILD_TESTS=ON
-        - run: cmake --build _build
-        - run: cmake --build _build --target test
-        - run: _build/check
-        - run: echo "This job's status is ${{ job.status }}."
-
+        - run: cmake -H. -B ${{github.workspace}}/build -DBUILD_TESTS=ON
+        - run: cmake --build ${{github.workspace}}/build
+        - run: build/check
+        - run: echo "This job's status is ${{ job.status }}."        
+          
+          
     Test_clang:
         runs-on: ubuntu-latest
         steps:
             - name: Check out repository code
               uses: actions/checkout@v3
+            - run: git submodule init && git submodule update
             - run: sudo apt update -y
             - run: sudo apt install -y clang cmake
             - run: cmake -H. -B_build -DBUILD_TESTS=ON
             - run: cmake --build _build
             - run: cmake --build _build --target test
             - run: echo "This job's status is ${{ job.status }}."
+            
+    coverage:
+     needs: Test_gcc
+     runs-on: ubuntu-latest
+     steps:
+        - name: Install lcov
+          run: sudo apt-get install -y lcov
+        - name: lcov
+          run: lcov -c -d build/CMakeFiles/banking.dir/banking/ --include *.cpp --output-file ./coverage/lcov.info
+        - name: Coveralls
+          uses: coverallsapp/github-action@v1.1.2
+          with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
