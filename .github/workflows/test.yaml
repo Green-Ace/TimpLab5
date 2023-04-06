@@ -19,6 +19,7 @@ jobs:
         - name: Publish to coveralls.io
           uses: coverallsapp/github-action@v1.1.2
           with: ${{ secrets.GITHUB_TOKEN }}
+          
 
     Test_clang:
         runs-on: ubuntu-latest
