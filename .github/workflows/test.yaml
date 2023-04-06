@@ -29,3 +29,11 @@ jobs:
             - run: cmake --build _build
             - run: cmake --build _build --target test
             - run: echo "This job's status is ${{ job.status }}."
+            
+    Test_coveralls:      
+        runs-on: ubuntu-latest   
+        steps:
+            - name: Check out repository code
+              uses: actions/checkout@v3  
+            - name: Coveralls GitHub Action
+              uses: coverallsapp/github-action@v2.0.0
