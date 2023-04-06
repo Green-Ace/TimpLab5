@@ -30,9 +30,13 @@ jobs:
             - run: cmake --build _build --target test
             - run: echo "This job's status is ${{ job.status }}."
             
-    Test_coveralls:      
-        runs-on: ubuntu-latest   
-        steps:
-            - name: Coveralls GitHub Action           
-              uses: coverallsapp/github-action@v2.0.0
-            - run: echo "This job's status is ${{ job.status }}."
+    coverage:
+     needs: Test_gcc
+     runs-on: ubuntu-latest
+     name: "Code coverage"
+     steps:
+      - name: 'Coveralls Finished'
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
