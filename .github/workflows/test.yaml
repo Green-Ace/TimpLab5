@@ -14,10 +14,11 @@ jobs:
         - run: cmake --build _build --target test
         - run: _build/check
         - run: cmake --build _build --target test -- ARGS=--verbose
-        - name: Coveralls GitHub Action
-          uses: coverallsapp/github-action@v2.0.0
         - run: echo "This job's status is ${{ job.status }}."
         
+        - name: Publish to coveralls.io
+          uses: coverallsapp/github-action@v1.1.2
+          with: ${{ secrets.GITHUB_TOKEN }}
 
     Test_clang:
         runs-on: ubuntu-latest
