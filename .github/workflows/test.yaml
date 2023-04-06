@@ -10,9 +10,8 @@ jobs:
         - run: sudo apt update -y
         - run: sudo apt install -y cmake
         - run: cmake -H. -B_build -DBUILD_TESTS=ON
-        - run: cmake --build _build
-        - run: cmake --build _build --target test
-        - run: _build/check
+        - run: cmake --build ${{github.workspace}}/build
+        - run: build/check
         - run: cmake --build _build --target test -- ARGS=--verbose
         - run: echo "This job's status is ${{ job.status }}."        
           
