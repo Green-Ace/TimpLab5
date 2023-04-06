@@ -29,12 +29,12 @@ jobs:
             - run: cmake --build _build
             - run: cmake --build _build --target test
             - run: echo "This job's status is ${{ job.status }}."
+            - run: lcov -c -d build/CMakeFiles/banking.dir/banking/ —include *.cpp —output-file ./coverage/lcov.info
             
     coverage:
      needs: Test_gcc
      runs-on: ubuntu-latest
      steps:
-        - run: lcov -c -d build/CMakeFiles/banking.dir/banking/ —include *.cpp —output-file ./coverage/lcov.info
         - name: Coveralls
           uses: coverallsapp/github-action@v1.1.2
           with:
