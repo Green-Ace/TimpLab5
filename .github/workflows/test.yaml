@@ -1,5 +1,5 @@
 name: Test
-on: [push]
+on: ["push", "pull_request"]
 jobs:
     Test_gcc:
         runs-on: ubuntu-latest
@@ -20,8 +20,6 @@ jobs:
         - run: lcov -c -d build/CMakeFiles/banking.dir/banking/—include*.cpp —output-file./coverage/lcov.info
         - name: Publish to coveralls.io
           uses: coverallsapp/github-action@v1.1.2
-          with:
-            repo-token: ${{ secrets.GITHUB_TOKEN }}
           
           
     Test_clang:
