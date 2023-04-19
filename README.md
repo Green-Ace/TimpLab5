@@ -1,3 +1,7 @@
+[![Coverage Status](https://coveralls.io/repos/github/Green-Ace/TimpLab5/badge.svg?branch=main)](https://coveralls.io/github/Green-Ace/TimpLab5?branch=main)
+
+
+
 cd Green-Ace/workspace
 
 git clone git@github.com:Green-Ace/TimpLab5.git
